@@ -2,6 +2,12 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoApp.Wpf", "CryptoApp.Wpf\CryptoApp.Wpf.csproj", "{30FC5F1A-24E0-4371-AB56-1AAEA2A24589}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoApp.Core", "CryptoApp.Core\CryptoApp.Core.csproj", "{17D6BFDA-445F-4619-AC0E-E3F829ECF292}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoApp.Application", "CryptoApp.Application\CryptoApp.Application.csproj", "{52F8CB44-9F3D-4DCE-89E6-A02CA34B2651}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoApp.Infrastructure", "CryptoApp.Infrastructure\CryptoApp.Infrastructure.csproj", "{B405C8C0-4FD9-49A2-9E44-0DFFFFC5DF40}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +18,17 @@ Global
 		{30FC5F1A-24E0-4371-AB56-1AAEA2A24589}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30FC5F1A-24E0-4371-AB56-1AAEA2A24589}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30FC5F1A-24E0-4371-AB56-1AAEA2A24589}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17D6BFDA-445F-4619-AC0E-E3F829ECF292}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17D6BFDA-445F-4619-AC0E-E3F829ECF292}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17D6BFDA-445F-4619-AC0E-E3F829ECF292}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17D6BFDA-445F-4619-AC0E-E3F829ECF292}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52F8CB44-9F3D-4DCE-89E6-A02CA34B2651}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52F8CB44-9F3D-4DCE-89E6-A02CA34B2651}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52F8CB44-9F3D-4DCE-89E6-A02CA34B2651}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52F8CB44-9F3D-4DCE-89E6-A02CA34B2651}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B405C8C0-4FD9-49A2-9E44-0DFFFFC5DF40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B405C8C0-4FD9-49A2-9E44-0DFFFFC5DF40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B405C8C0-4FD9-49A2-9E44-0DFFFFC5DF40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B405C8C0-4FD9-49A2-9E44-0DFFFFC5DF40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
