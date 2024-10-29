@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace CryptoApp;
+namespace CryptoApp.Wpf;
 
 /// <summary>
 /// Interaction logic for App.xaml

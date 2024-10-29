@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoApp", "CryptoApp\CryptoApp.csproj", "{30FC5F1A-24E0-4371-AB56-1AAEA2A24589}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoApp.Wpf", "CryptoApp.Wpf\CryptoApp.Wpf.csproj", "{30FC5F1A-24E0-4371-AB56-1AAEA2A24589}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
