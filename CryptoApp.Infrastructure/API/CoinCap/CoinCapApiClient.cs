@@ -14,17 +14,31 @@ public class CoinCapApiClient : ICoinCapApiClient
         HttpClient = httpClient;
     }
     
-    public Task<Result<CoinCapGetAssetsResponse>> GetAssetsAsync(int limit)
+    public async Task<Result<CoinCapGetAssetsResponse>> GetAssetsAsync(int limit)
     {
         var request = new HttpRequestMessage(HttpMethod.Get, $"assets?limit={limit}");
-        var response = HttpClient.SendAsync(request);
-        if (response.Result.IsSuccessStatusCode)
+        try
         {
-            var content = response.Result.Content.ReadAsStringAsync();
-            var data = JsonSerializer.Deserialize<CoinCapGetAssetsResponse>(content.Result);
-            return Task.FromResult(Result<CoinCapGetAssetsResponse>.Success(data));
-        }
+            var response = await HttpClient.SendAsync(request);
+            response.EnsureSuccessStatusCode();
 
-        return Task.FromResult(Result<CoinCapGetAssetsResponse>.Failure("Failed to get assets"));
+            var content = await response.Content.ReadAsStringAsync();
+            var data = JsonSerializer.Deserialize<CoinCapGetAssetsResponse>(content);
+
+            return Result<CoinCapGetAssetsResponse>.Success(data);
+        }
+        catch (HttpRequestException e)
+        {
+            return Result<CoinCapGetAssetsResponse>.Failure($"API request failed: {e.Message}");
+        }
+        catch (JsonException e)
+        {
+            return Result<CoinCapGetAssetsResponse>.Failure($"Failed to parse JSON: {e.Message}");
+        }
+        catch (Exception e)
+        {
+            return Result<CoinCapGetAssetsResponse>.Failure($"An error occurred: {e.Message}");
+        }
+        
     }
 }
