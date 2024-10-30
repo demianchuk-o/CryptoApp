@@ -2,5 +2,5 @@
 
 public record  CoinCapGetAssetsResponse(
     CoinCapAsset[] Data,
-    int Timestamp
+    long Timestamp
 );
