@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows;
 using CryptoApp.Application.Crypto;
 using CryptoApp.Core.CryptoCurrencies;
 
@@ -39,6 +40,10 @@ public class TopCurrenciesViewModel : INotifyPropertyChanged
             {
                 CryptoCurrencies.Add(cryptoCurrency);
             }
+        }
+        else
+        {
+            MessageBox.Show(result.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
     
