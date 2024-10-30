@@ -6,4 +6,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\CryptoApp.Core\CryptoApp.Core.csproj" />
+      <ProjectReference Include="..\CryptoApp.Infrastructure\CryptoApp.Infrastructure.csproj" />
+    </ItemGroup>
+
 </Project>
