@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 using CryptoApp.Core.Results;
 using CryptoApp.Infrastructure.API.CoinCap.Responses;
 
@@ -8,6 +9,12 @@ public class CoinCapApiClient : ICoinCapApiClient
 {
     private readonly HttpClient HttpClient;
     private readonly string _baseUrl = "https://api.coincap.io/v2/";
+    private static JsonSerializerOptions _serializerOptions = new()
+    {
+        PropertyNameCaseInsensitive = true,
+        NumberHandling = JsonNumberHandling.AllowReadingFromString 
+                         | JsonNumberHandling.WriteAsString
+    };
     public CoinCapApiClient(HttpClient httpClient)
     {
         httpClient.BaseAddress = new Uri(_baseUrl);
@@ -23,8 +30,9 @@ public class CoinCapApiClient : ICoinCapApiClient
             response.EnsureSuccessStatusCode();
 
             var content = await response.Content.ReadAsStringAsync();
-            var data = JsonSerializer.Deserialize<CoinCapGetAssetsResponse>(content);
-
+            
+            var data = JsonSerializer.Deserialize<CoinCapGetAssetsResponse>(content, _serializerOptions);
+    
             return Result<CoinCapGetAssetsResponse>.Success(data);
         }
         catch (HttpRequestException e)
