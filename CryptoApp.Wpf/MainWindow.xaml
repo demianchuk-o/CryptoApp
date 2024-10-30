@@ -10,8 +10,7 @@
         <TabControl>
             <TabItem>
                 <TabItem.Header>Home</TabItem.Header>
-                <Frame x:Name="MainFrame" 
-                       Source="TopCurrencies/TopCurrenciesPage.xaml" />
+                <Frame x:Name="MainFrame" />
             </TabItem>
         </TabControl>
     </Grid>
