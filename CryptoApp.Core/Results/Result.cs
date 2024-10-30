@@ -1,6 +1,6 @@
 ﻿namespace CryptoApp.Core.Results;
 
-public class Result<T>
+public class Result<T> where T : class
 {
     public bool IsSuccess { get; set; }
     public string Message { get; set; }

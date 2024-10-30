@@ -1,6 +1,6 @@
 ﻿namespace CryptoApp.Infrastructure.API.CoinCap.Responses;
 
-public record struct CoinCapGetAssetsResponse(
+public record  CoinCapGetAssetsResponse(
     CoinCapAsset[] Data,
     int Timestamp
 );

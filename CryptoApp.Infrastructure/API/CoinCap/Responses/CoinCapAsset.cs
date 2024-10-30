@@ -1,6 +1,6 @@
 ﻿namespace CryptoApp.Infrastructure.API.CoinCap.Responses;
 
-public record struct CoinCapAsset(
+public record CoinCapAsset(
     string Id,
     int Rank,
     string Symbol,
