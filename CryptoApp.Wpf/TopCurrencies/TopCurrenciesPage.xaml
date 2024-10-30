@@ -7,6 +7,18 @@
       mc:Ignorable="d"
       Title="TopCurrenciesPage" Height="450" Width="800">
     <Grid>
-        
+        <TextBox Text="Top 10 Currencies"></TextBox>
+        <ListBox ItemsSource="{Binding CryptoCurrencies}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="10 5"
+                                Orientation="Horizontal">
+                        <TextBox Text="{Binding Path=Name}" />
+                        <TextBox Text="{Binding Path=PriceUsd}" />
+                        <TextBox Text="{Binding Path=VolumeUsd24Hr}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Page>
