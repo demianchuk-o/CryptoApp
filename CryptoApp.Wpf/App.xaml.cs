@@ -14,26 +14,31 @@ namespace CryptoApp.Wpf;
 /// </summary>
 public partial class App : System.Windows.Application
 {
-    private readonly IServiceProvider _serviceProvider;
-
+    public IServiceProvider ServiceProvider { get; }
+    
     public App()
     {
         var services = new ServiceCollection();
-
+        ConfigureServices(services);
+        ServiceProvider = services.BuildServiceProvider();
+    }
+    public new static App Current => (App)System.Windows.Application.Current;
+    private void ConfigureServices(IServiceCollection services)
+    {
         services.AddSingleton<HttpClient>();
         services.AddSingleton<ICoinCapApiClient, CoinCapApiClient>();
 
         services.AddTransient<ICryptoService, CryptoService>();
+        services.AddTransient<TopCurrenciesPage>();
         services.AddTransient<TopCurrenciesViewModel>();
-
         services.AddSingleton<MainWindow>();
-        
-        _serviceProvider = services.BuildServiceProvider();
     }
     
-    protected override void OnStartup(StartupEventArgs e)
+    private void OnStartup(object sender, StartupEventArgs startupEventArgs)
     {
-        var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
+        var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
+        var topCurrenciesPage = ServiceProvider.GetRequiredService<TopCurrenciesPage>();
+        mainWindow.MainFrame.Content = topCurrenciesPage;
         mainWindow.Show();
     }
 }
