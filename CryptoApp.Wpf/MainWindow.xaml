@@ -7,6 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <TabControl>
+            <TabItem>
+                <TabItem.Header>Home</TabItem.Header>
+                <Frame x:Name="MainFrame" 
+                       Source="TopCurrencies/TopCurrenciesPage.xaml" />
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
