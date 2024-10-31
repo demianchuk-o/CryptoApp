@@ -5,23 +5,49 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:CryptoApp.Wpf.TopCurrencies"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:valueConverters="clr-namespace:CryptoApp.Wpf.Shared.ValueConverters"
       mc:Ignorable="d"
       Title="TopCurrenciesPage" Height="450" Width="800">
+    <Page.Resources>
+        <valueConverters:NumberConverter x:Key="NumberConverter" />
+        <BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
+    </Page.Resources>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadDataCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    <Grid>
-        <TextBox Text="Top 10 Currencies"></TextBox>
-        <ListBox ItemsSource="{Binding CryptoCurrencies}">
+    <Grid Margin="0 10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0" HorizontalAlignment="Stretch" LastChildFill="False" Margin="5 2">
+            <TextBlock x:Name="HeaderBlock" Text="Top Currencies" DockPanel.Dock="Left" />
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                <TextBlock Text="Limit: " Margin="5 0" />
+                <TextBox x:Name="NumberTextBox" Width="20"
+                         Text="{Binding Limit, StringFormat={}{0:N2}, Converter={StaticResource NumberConverter}, UpdateSourceTrigger=PropertyChanged}">
+                </TextBox>
+                <Button Content="Refresh" Margin="5 0" Padding="5 0" 
+                        Command="{Binding LoadDataCommand}" />
+            </StackPanel>
+        </DockPanel>
+        
+        <TextBlock Grid.Row="1" Text="Loading..." Visibility="{Binding AppState.IsLoading, Converter={StaticResource VisibilityConverter}}" 
+                   HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <TextBlock Grid.Row="1" Visibility="{Binding AppState.IsError, Converter={StaticResource VisibilityConverter}}" 
+                   Text="{Binding AppState.ErrorMessage}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <ListBox Visibility="{Binding AppState.IsLoaded, Converter={StaticResource VisibilityConverter}}" 
+            Grid.Row="1" ItemsSource="{Binding CryptoCurrencies}" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="10 5"
                                 Orientation="Horizontal">
-                        <TextBox Text="{Binding Path=Name}" />
-                        <TextBox Text="{Binding Path=PriceUsd}" />
-                        <TextBox Text="{Binding Path=VolumeUsd24Hr}" />
+                        <TextBlock Text="text"></TextBlock>
+                        <TextBlock Text="{Binding Path=Name}" />
+                        <TextBlock Text="{Binding Path=PriceUsd}" />
+                        <TextBlock Text="{Binding Path=VolumeUsd24Hr}" />
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
