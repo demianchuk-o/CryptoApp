@@ -19,6 +19,5 @@ public partial class CryptoSearchItem : UserControl
     public CryptoSearchItem()
     {
         InitializeComponent();
-        DataContext = this;
     }
 }
