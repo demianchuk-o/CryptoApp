@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using CryptoApp.Application.Crypto;
 using CryptoApp.Core.CryptoCurrencies;
+using CryptoApp.Wpf.Shared;
 using CryptoApp.Wpf.Shared.Commands;
 
 namespace CryptoApp.Wpf.TopCurrencies;
@@ -13,6 +14,18 @@ public class TopCurrenciesViewModel : INotifyPropertyChanged
     public TopCurrenciesViewModel(ICryptoService cryptoService)
     {
         _cryptoService = cryptoService;
+    }
+    
+    private AppState _appState;
+    public AppState AppState
+    {
+        get => _appState;
+        private set
+        {
+            if (_appState == value) return;
+            _appState = value;
+            OnPropertyChanged(nameof(AppState));
+        }
     }
     private int _limit = 10;
     
@@ -34,6 +47,7 @@ public class TopCurrenciesViewModel : INotifyPropertyChanged
     public RelayCommand LoadDataCommand => _loadDataCommand ??= new RelayCommand(async _ => await LoadDataAsync());
     public async Task LoadDataAsync()
     {
+        AppState = AppState.Loading();
         var result = await _cryptoService.GetTopCryptoCurrenciesAsync(Limit);
         if (result.IsSuccess)
         {
@@ -42,10 +56,11 @@ public class TopCurrenciesViewModel : INotifyPropertyChanged
             {
                 CryptoCurrencies.Add(cryptoCurrency);
             }
+            AppState = AppState.Loaded();
         }
         else
         {
-            MessageBox.Show(result.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            AppState = AppState.Error(result.Message);
         }
     }
     
