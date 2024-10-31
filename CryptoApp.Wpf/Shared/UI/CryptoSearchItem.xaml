@@ -13,7 +13,7 @@
         <valueConverters:ChangePercent24HrConverter x:Key="ChangePercent24HrConverter" />
         <valueConverters:VolumeUsd24HrConverter x:Key="VolumeUsd24HrConverter" />
     </UserControl.Resources>
-    <Grid Margin="10,0" Background="CadetBlue"
+    <Grid Margin="10,0"
           DataContext="{Binding CryptoCurrency, ElementName=Control}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
