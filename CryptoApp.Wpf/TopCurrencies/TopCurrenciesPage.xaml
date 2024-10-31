@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:CryptoApp.Wpf.TopCurrencies"
       xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       xmlns:valueConverters="clr-namespace:CryptoApp.Wpf.Shared.ValueConverters"
+      xmlns:ui="clr-namespace:CryptoApp.Wpf.Shared.UI"
       mc:Ignorable="d"
       Title="TopCurrenciesPage" Height="450" Width="800">
     <Page.Resources>
@@ -42,12 +43,7 @@
             Grid.Row="1" ItemsSource="{Binding CryptoCurrencies}" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Margin="10 5"
-                                Orientation="Horizontal">
-                        <TextBlock Text="{Binding Path=Name}" />
-                        <TextBlock Text="{Binding Path=PriceUsd}" />
-                        <TextBlock Text="{Binding Path=VolumeUsd24Hr}" />
-                    </StackPanel>
+                    <ui:CryptoSearchItem CryptoCurrency="{Binding}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
