@@ -9,7 +9,7 @@ public class CoinCapApiClient : ICoinCapApiClient
 {
     private readonly HttpClient HttpClient;
     private readonly string _baseUrl = "https://api.coincap.io/v2/";
-    private static JsonSerializerOptions _serializerOptions = new()
+    private static readonly JsonSerializerOptions _serializerOptions = new()
     {
         PropertyNameCaseInsensitive = true,
         NumberHandling = JsonNumberHandling.AllowReadingFromString 
