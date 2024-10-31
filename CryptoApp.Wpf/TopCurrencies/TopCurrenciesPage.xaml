@@ -4,9 +4,14 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:CryptoApp.Wpf.TopCurrencies"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       mc:Ignorable="d"
-      Title="TopCurrenciesPage" Height="450" Width="800"
-      Loaded="Page_Loaded">
+      Title="TopCurrenciesPage" Height="450" Width="800">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadDataCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <TextBox Text="Top 10 Currencies"></TextBox>
         <ListBox ItemsSource="{Binding CryptoCurrencies}">

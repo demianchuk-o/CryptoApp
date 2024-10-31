@@ -3,13 +3,17 @@ using System.ComponentModel;
 using System.Windows;
 using CryptoApp.Application.Crypto;
 using CryptoApp.Core.CryptoCurrencies;
+using CryptoApp.Wpf.Shared.Commands;
 
 namespace CryptoApp.Wpf.TopCurrencies;
 
 public class TopCurrenciesViewModel : INotifyPropertyChanged
 {
     private readonly ICryptoService _cryptoService;
-    public ObservableCollection<CryptoCurrency> CryptoCurrencies { get; } = [];
+    public TopCurrenciesViewModel(ICryptoService cryptoService)
+    {
+        _cryptoService = cryptoService;
+    }
     private int _limit = 10;
     
     public int Limit
@@ -25,11 +29,9 @@ public class TopCurrenciesViewModel : INotifyPropertyChanged
         }
     }
     
-    public TopCurrenciesViewModel(ICryptoService cryptoService)
-    {
-        _cryptoService = cryptoService;
-    }
-    
+    public ObservableCollection<CryptoCurrency> CryptoCurrencies { get; } = [];
+    private RelayCommand? _loadDataCommand;
+    public RelayCommand LoadDataCommand => _loadDataCommand ??= new RelayCommand(async _ => await LoadDataAsync());
     public async Task LoadDataAsync()
     {
         var result = await _cryptoService.GetTopCryptoCurrenciesAsync(Limit);
