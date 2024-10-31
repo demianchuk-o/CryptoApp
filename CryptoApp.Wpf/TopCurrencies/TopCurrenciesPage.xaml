@@ -44,7 +44,6 @@
                 <DataTemplate>
                     <StackPanel Margin="10 5"
                                 Orientation="Horizontal">
-                        <TextBlock Text="text"></TextBlock>
                         <TextBlock Text="{Binding Path=Name}" />
                         <TextBlock Text="{Binding Path=PriceUsd}" />
                         <TextBlock Text="{Binding Path=VolumeUsd24Hr}" />
