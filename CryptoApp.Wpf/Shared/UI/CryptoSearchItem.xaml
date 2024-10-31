@@ -12,6 +12,7 @@
         <valueConverters:PriceUsdConverter x:Key="PriceUsdConverter" />
         <valueConverters:ChangePercent24HrConverter x:Key="ChangePercent24HrConverter" />
         <valueConverters:VolumeUsd24HrConverter x:Key="VolumeUsd24HrConverter" />
+        <valueConverters:PercentageToBrushConverter x:Key="PercentageToBrushConverter"/>
     </UserControl.Resources>
     <Grid Margin="10,0"
           DataContext="{Binding CryptoCurrency, ElementName=Control}">
@@ -39,6 +40,10 @@
         <TextBlock Grid.Column="4" Grid.Row="0" 
                    Text="{Binding ChangePercent24Hr, Converter={StaticResource ChangePercent24HrConverter} }"
                    Margin="0,0,10,0">
+            <TextBlock.Foreground>
+                <Binding Path="ChangePercent24Hr" 
+                         Converter="{StaticResource PercentageToBrushConverter}" />
+            </TextBlock.Foreground>
         </TextBlock>
         <TextBlock Grid.Column="5" Grid.Row="0" 
                    Text="{Binding VolumeUsd24Hr, Converter={StaticResource VolumeUsd24HrConverter} }" 
