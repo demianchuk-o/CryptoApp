@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows;
 using CryptoApp.Application.Crypto;
 using CryptoApp.Core.CryptoCurrencies;
 using CryptoApp.Wpf.Shared;
@@ -34,11 +33,9 @@ public class TopCurrenciesViewModel : INotifyPropertyChanged
         get => _limit;
         set
         {
-            if (_limit != value)
-            {
-                _limit = value;
-                OnPropertyChanged(nameof(Limit));
-            }
+            if (_limit == value) return;
+            _limit = value > 0 ? value : 1;
+            OnPropertyChanged(nameof(Limit));
         }
     }
     
