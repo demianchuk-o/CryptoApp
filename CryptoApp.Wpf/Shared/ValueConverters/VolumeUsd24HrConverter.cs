@@ -9,7 +9,7 @@ public class VolumeUsd24HrConverter : IValueConverter
     {
         if (value is decimal volumeUsd)
         {
-            return volumeUsd.ToString("N0", CultureInfo.InvariantCulture);
+            return string.Format(new CultureInfo("en-US"), "{0:C}", volumeUsd);
         }
         return value;
     }

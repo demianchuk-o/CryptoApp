@@ -9,7 +9,7 @@ public class PriceUsdConverter : IValueConverter
     {
         if (value is decimal priceUsd)
         {
-            return priceUsd.ToString("C2", CultureInfo.InvariantCulture);
+            return string.Format(new CultureInfo("en-US"), "{0:C}", priceUsd);
         }
         return value;
     }
