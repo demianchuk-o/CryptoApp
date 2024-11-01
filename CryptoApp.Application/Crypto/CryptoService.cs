@@ -14,7 +14,7 @@ public class CryptoService : ICryptoService
         _coinCapApiClient = coinCapApiClient;
     }
 
-    public async Task<Result<List<CryptoCurrency>>> GetTopCryptoCurrenciesAsync(int limit, string search)
+    public async Task<Result<List<CryptoCurrency>>> GetTopCryptoCurrenciesAsync(int limit = 0, string search = "")
     {
         var result = await _coinCapApiClient.GetAssetsAsync(limit, search);
         if (result.IsSuccess)
