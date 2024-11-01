@@ -7,11 +7,11 @@ public record CoinCapAsset(
     string Name,
     decimal Supply,
     decimal? MaxSupply,
-    decimal MarketCapUsd,
-    decimal VolumeUsd24Hr,
-    decimal PriceUsd,
+    decimal? MarketCapUsd,
+    decimal? VolumeUsd24Hr,
+    decimal? PriceUsd,
     decimal? ChangePercent24Hr,
-    decimal Vwap24Hr
+    decimal? Vwap24Hr
 );
 
 
