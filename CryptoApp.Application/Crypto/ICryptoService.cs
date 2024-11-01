@@ -5,5 +5,5 @@ namespace CryptoApp.Application.Crypto;
 
 public interface ICryptoService
 {
-    Task<Result<List<CryptoCurrency>>> GetTopCryptoCurrenciesAsync(int limit);
+    Task<Result<List<CryptoCurrency>>> GetTopCryptoCurrenciesAsync(int limit, string search = "");
 }
