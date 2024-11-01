@@ -21,9 +21,23 @@ public class CoinCapApiClient : ICoinCapApiClient
         HttpClient = httpClient;
     }
     
-    public async Task<Result<CoinCapGetAssetsResponse>> GetAssetsAsync(int limit)
+    public async Task<Result<CoinCapGetAssetsResponse>> GetAssetsAsync(int limit = 0, string search = "")
     {
-        var request = new HttpRequestMessage(HttpMethod.Get, $"assets?limit={limit}");
+        var requestString = $"assets";
+        
+        if(limit > 0 || !string.IsNullOrEmpty(search))
+        {
+            requestString += "?";
+        }
+        if (limit > 0)
+        {
+            requestString += $"limit={limit}";
+        }
+        if (!string.IsNullOrEmpty(search))
+        {
+            requestString += $"search={search}";
+        }
+        var request = new HttpRequestMessage(HttpMethod.Get, requestString);
         try
         {
             var response = await HttpClient.SendAsync(request);
