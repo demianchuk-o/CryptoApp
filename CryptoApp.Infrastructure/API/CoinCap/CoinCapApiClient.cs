@@ -36,7 +36,7 @@ public class CoinCapApiClient : ICoinCapApiClient
             ? "?" + string.Join("&", queryParameters)
             : "";
         
-        var request = new HttpRequestMessage(HttpMethod.Get, queryString);
+        var request = new HttpRequestMessage(HttpMethod.Get, $"assets{queryString}");
         try
         {
             var response = await HttpClient.SendAsync(request);
