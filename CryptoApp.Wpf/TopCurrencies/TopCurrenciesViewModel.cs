@@ -45,7 +45,7 @@ public class TopCurrenciesViewModel : INotifyPropertyChanged
     public async Task LoadDataAsync()
     {
         AppState = AppState.Loading();
-        var result = await _cryptoService.GetTopCryptoCurrenciesAsync(Limit);
+        var result = await _cryptoService.GetCryptoCurrenciesAsync(Limit);
         if (result.IsSuccess)
         {
             CryptoCurrencies.Clear();
