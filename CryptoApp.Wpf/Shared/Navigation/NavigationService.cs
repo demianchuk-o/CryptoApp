@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Navigation;
 
 namespace CryptoApp.Wpf.Shared.Navigation;
 
@@ -7,12 +8,16 @@ public class NavigationService : INavigationService
     private Frame _frame;
     public void Initialize(Frame frame)
     {
-        throw new NotImplementedException();
+        _frame = frame;
+        _frame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
     }
 
     public void NavigateTo(string pageUri, object parameter = null)
     {
-        throw new NotImplementedException();
+        if(_frame is null)
+            throw new InvalidOperationException("Frame is not initialized");
+
+        _frame.Navigate(new Uri(pageUri, UriKind.Relative), parameter);
     }
 
     public void GoBack()
@@ -20,5 +25,5 @@ public class NavigationService : INavigationService
         throw new NotImplementedException();
     }
 
-    public bool CanGoBack { get; }
+    public bool CanGoBack => _frame?.CanGoBack ?? false;
 }
