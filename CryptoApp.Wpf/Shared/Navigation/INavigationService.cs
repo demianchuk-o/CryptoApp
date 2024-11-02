@@ -6,6 +6,7 @@ public interface INavigationService
 {
     void Initialize(Frame frame);
     void NavigateTo(string pageUri, object parameter = null);
+    void NavigateToDetails(string id);
     void GoBack();
     bool CanGoBack { get; }
 }
