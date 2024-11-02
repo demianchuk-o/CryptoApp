@@ -26,8 +26,8 @@ public partial class MainWindow : Window
         _frameNavigationManager.InitializeFrame(SearchFrame, FrameType.Search);
         
         _frameNavigationManager.GetNavigationService(FrameType.Main)
-            .NavigateTo("TopCurrencies/TopCurrenciesPage");
+            .NavigateTo("TopCurrencies/TopCurrenciesPage.xaml");
         _frameNavigationManager.GetNavigationService(FrameType.Search)
-            .NavigateTo("SearchCurrencies/SearchCurrenciesPage");
+            .NavigateTo("SearchCurrencies/SearchCurrenciesPage.xaml");
     }
 }
