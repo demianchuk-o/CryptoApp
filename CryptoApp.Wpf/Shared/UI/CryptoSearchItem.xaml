@@ -13,8 +13,28 @@
         <valueConverters:ChangePercent24HrConverter x:Key="ChangePercent24HrConverter" />
         <valueConverters:VolumeUsd24HrConverter x:Key="VolumeUsd24HrConverter" />
         <valueConverters:PercentageToBrushConverter x:Key="PercentageToBrushConverter"/>
-        <Style TargetType="TextBlock">
+        <Style x:Key="BaseTextBlockStyle" TargetType="TextBlock">
             <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="0,0,10,0" />
+        </Style>
+        <Style x:Key="NumericValueStyle" TargetType="TextBlock"
+               BasedOn="{StaticResource BaseTextBlockStyle}">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+        <Style x:Key="RankStyle" TargetType="TextBlock"
+               BasedOn="{StaticResource BaseTextBlockStyle}">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="10,0"/>
+        </Style>
+        <Style x:Key="SymbolStyle" TargetType="TextBlock"
+               BasedOn="{StaticResource BaseTextBlockStyle}">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
+        <Style x:Key="NameStyle" TargetType="TextBlock"
+               BasedOn="{StaticResource BaseTextBlockStyle}">
+            <Setter Property="FontSize" Value="14" />
         </Style>
     </UserControl.Resources>
     <Grid Margin="5,5" HorizontalAlignment="Stretch" Width="Auto"
@@ -30,23 +50,24 @@
             <ColumnDefinition Width="0.25*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Column="0" Text="{Binding Rank}"
-                   FontWeight="Bold" Margin="10,0" FontSize="16"/>
+        <TextBlock Grid.Column="0" 
+                   Text="{Binding Rank}"
+                   Style="{StaticResource RankStyle}"/>
             
         <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical" Margin="10,0">
-            <TextBlock Text="{Binding Symbol}" FontWeight="Bold" FontSize="20"/>
-            <TextBlock Text="{Binding Name}" FontSize="14"/>
+            <TextBlock Text="{Binding Symbol}"
+                       Style="{StaticResource SymbolStyle}"/>
+            <TextBlock Text="{Binding Name}"
+                       Style="{StaticResource NameStyle}"/>
         </StackPanel>
             
         <TextBlock Grid.Column="2" Grid.Row="0"
                    Text="{Binding PriceUsd, Converter={StaticResource PriceUsdConverter}}"
-                   Margin="0,0,10,0" FontSize="16"
-                   HorizontalAlignment="Right"/>
+                   Style="{StaticResource NumericValueStyle}"/>
             
         <TextBlock Grid.Column="3" Grid.Row="0"
                    Text="{Binding ChangePercent24Hr, Converter={StaticResource ChangePercent24HrConverter}}"
-                   Margin="0,0,10,0" FontSize="16"
-                   HorizontalAlignment="Right">
+                   Style="{StaticResource NumericValueStyle}">
             <TextBlock.Foreground>
                 <Binding Path="ChangePercent24Hr"
                          Converter="{StaticResource PercentageToBrushConverter}" />
@@ -55,8 +76,7 @@
             
         <TextBlock Grid.Column="4" Grid.Row="0"
                    Text="{Binding VolumeUsd24Hr, Converter={StaticResource VolumeUsd24HrConverter}}"
-                   Margin="0,0,10,0" FontSize="16"
-                   HorizontalAlignment="Right"
+                   Style="{StaticResource NumericValueStyle}"
         />
     </Grid>
 </UserControl>

@@ -5,5 +5,5 @@ namespace CryptoApp.Infrastructure.API.CoinCap;
 
 public interface ICoinCapApiClient
 {
-    public Task<Result<CoinCapGetAssetsResponse>> GetAssetsAsync(int limit);
+    public Task<Result<CoinCapGetAssetsResponse>> GetAssetsAsync(int limit, string search);
 }
