@@ -2,12 +2,14 @@
 using System.Text.Json.Serialization;
 using CryptoApp.Core.Results;
 using CryptoApp.Infrastructure.API.CoinCap.Responses;
+using CryptoApp.Infrastructure.API.Shared.RateLimiter;
 
 namespace CryptoApp.Infrastructure.API.CoinCap;
 
 public class CoinCapApiClient : ICoinCapApiClient
 {
     private readonly HttpClient HttpClient;
+    private readonly RateLimiter _rateLimiter = new RateLimiter(TimeSpan.FromMilliseconds(500));
     private readonly string _baseUrl = "https://api.coincap.io/v2/";
     private static readonly JsonSerializerOptions _serializerOptions = new()
     {
@@ -23,6 +25,11 @@ public class CoinCapApiClient : ICoinCapApiClient
     
     public async Task<Result<CoinCapGetAssetsResponse>> GetAssetsAsync(int limit = 0, string search = "")
     {
+        if(_rateLimiter.CanProcess() is false)
+        {
+            return Result<CoinCapGetAssetsResponse>.Failure("Request ignored to not exceed rate limit");
+        }
+        
         List<string> queryParameters = [];
         if (limit > 0)
         {
