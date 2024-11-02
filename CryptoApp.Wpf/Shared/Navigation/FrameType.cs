@@ -3,5 +3,5 @@
 public enum FrameType
 {
     Main,
-    Saerch
+    Search
 }
