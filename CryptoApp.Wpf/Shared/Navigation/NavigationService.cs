@@ -22,7 +22,11 @@ public class NavigationService : INavigationService
 
     public void GoBack()
     {
-        throw new NotImplementedException();
+        if(_frame is null)
+            throw new InvalidOperationException("Frame is not initialized");
+
+        if(_frame.CanGoBack)
+            _frame.GoBack();
     }
 
     public bool CanGoBack => _frame?.CanGoBack ?? false;
