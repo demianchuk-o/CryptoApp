@@ -45,7 +45,9 @@
             HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate>
+                    <Grid MouseLeftButtonDown="UIElement_OnMouseLeftButtonDown">
                     <ui:CryptoSearchItem CryptoCurrency="{Binding}" />
+                    </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
