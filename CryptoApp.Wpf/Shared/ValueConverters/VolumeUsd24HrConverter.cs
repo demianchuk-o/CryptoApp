@@ -11,7 +11,7 @@ public class VolumeUsd24HrConverter : IValueConverter
         {
             return string.Format(new CultureInfo("en-US"), "{0:C}", volumeUsd);
         }
-        return value;
+        return "N/A";
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

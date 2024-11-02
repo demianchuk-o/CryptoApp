@@ -11,7 +11,7 @@ public class ChangePercent24HrConverter : IValueConverter
         {
             return changePercent.ToString("P2", CultureInfo.InvariantCulture);
         }
-        return value;
+        return "N/A";
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
