@@ -4,15 +4,19 @@ using CryptoApp.Application.Crypto;
 using CryptoApp.Core.CryptoCurrencies;
 using CryptoApp.Wpf.Shared;
 using CryptoApp.Wpf.Shared.Commands;
+using CryptoApp.Wpf.Shared.Navigation;
+using CryptoApp.Wpf.Shared.Navigation.Manager;
 
 namespace CryptoApp.Wpf.TopCurrencies;
 
 public class TopCurrenciesViewModel : INotifyPropertyChanged
 {
     private readonly ICryptoService _cryptoService;
-    public TopCurrenciesViewModel(ICryptoService cryptoService)
+    private readonly INavigationService _navigationService;
+    public TopCurrenciesViewModel(ICryptoService cryptoService, IFrameNavigationManager frameNavigationManager)
     {
         _cryptoService = cryptoService;
+        _navigationService = frameNavigationManager.GetNavigationService(FrameType.Main);
     }
     
     private AppState _appState;
@@ -59,6 +63,14 @@ public class TopCurrenciesViewModel : INotifyPropertyChanged
         {
             AppState = AppState.Error(result.Message);
         }
+    }
+
+    private RelayCommand? _navigateToDetailsCommand;
+    public RelayCommand NavigateToDetailsCommand => _navigateToDetailsCommand ??= new RelayCommand(NavigateToDetails);
+    private void NavigateToDetails(object parameter)
+    {
+        if (parameter is not CryptoCurrency cryptoCurrency) return;
+        _navigationService.NavigateToDetails(cryptoCurrency.Id);
     }
     
     public event PropertyChangedEventHandler? PropertyChanged;
