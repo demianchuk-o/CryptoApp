@@ -29,4 +29,17 @@ public class CryptoService : ICryptoService
         
         return Result<List<CryptoCurrency>>.Failure(result.Message);
     }
+
+    public async Task<Result<CryptoCurrencyHistory>> GetCryptoCurrencyHistoryAsync(string id, string interval, string start, string end)
+    {
+        var result = await _coinCapApiClient.GetHistoryAsync(id, interval, start, end);
+        if (result.IsSuccess)
+        {
+            var responseData = result.Data;
+            var cryptoCurrencyHistory = CryptoCurrencyHistoryMapper.Map(responseData);
+            
+            return Result<CryptoCurrencyHistory>.Success(cryptoCurrencyHistory);
+        }
+        return Result<CryptoCurrencyHistory>.Failure(result.Message);
+    }
 }
