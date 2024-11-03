@@ -39,15 +39,10 @@
                    HorizontalAlignment="Center" VerticalAlignment="Center" />
         <TextBlock Grid.Row="1" Visibility="{Binding AppState.IsError, Converter={StaticResource VisibilityConverter}}" 
                    Text="{Binding AppState.ErrorMessage}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <ListBox Visibility="{Binding AppState.IsLoaded, Converter={StaticResource VisibilityConverter}}" 
+        <ui:CurrencyList 
             Grid.Row="1" 
-            ItemsSource="{Binding CryptoCurrencies}" 
-            HorizontalContentAlignment="Stretch">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <ui:CryptoSearchItem CryptoCurrency="{Binding}" />
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+            Visibility="{Binding AppState.IsLoaded, Converter={StaticResource VisibilityConverter}}" 
+            ItemsSource="{Binding CryptoCurrencies}"
+            SelectionCommand="{Binding NavigateToDetailsCommand}"/>
     </Grid>
 </Page>

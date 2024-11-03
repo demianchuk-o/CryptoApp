@@ -4,16 +4,20 @@ using CryptoApp.Application.Crypto;
 using CryptoApp.Core.CryptoCurrencies;
 using CryptoApp.Wpf.Shared;
 using CryptoApp.Wpf.Shared.Commands;
+using CryptoApp.Wpf.Shared.Navigation;
+using CryptoApp.Wpf.Shared.Navigation.Manager;
 
 namespace CryptoApp.Wpf.SearchCurrencies;
 
 public class SearchCurrenciesViewModel : INotifyPropertyChanged
 {
     private readonly ICryptoService _cryptoService;
+    private readonly INavigationService _navigationService;
 
-    public SearchCurrenciesViewModel(ICryptoService cryptoService)
+    public SearchCurrenciesViewModel(ICryptoService cryptoService, IFrameNavigationManager navigationManager)
     {
         _cryptoService = cryptoService;
+        _navigationService = navigationManager.GetNavigationService(FrameType.Search);
     }
     
     private AppState _appState;
@@ -41,7 +45,13 @@ public class SearchCurrenciesViewModel : INotifyPropertyChanged
     
     private RelayCommand? _searchCommand;
     public RelayCommand SearchCommand => _searchCommand ??= new RelayCommand(async _ => SearchAsync());
-
+    private RelayCommand? _navigateToDetailsCommand;
+    public RelayCommand NavigateToDetailsCommand => _navigateToDetailsCommand ??= new RelayCommand(
+        async parameter =>
+        {
+            if (parameter is not CryptoCurrency cryptoCurrency) return;
+            _navigationService.NavigateToDetails(cryptoCurrency.Id);
+        });
     private async Task SearchAsync()
     {
         if(string.IsNullOrWhiteSpace(SearchTerm)) return;

@@ -4,7 +4,9 @@ using System.Net.Http;
 using System.Windows;
 using CryptoApp.Application.Crypto;
 using CryptoApp.Infrastructure.API.CoinCap;
+using CryptoApp.Wpf.CurrencyDetails;
 using CryptoApp.Wpf.SearchCurrencies;
+using CryptoApp.Wpf.Shared.Navigation.Manager;
 using CryptoApp.Wpf.TopCurrencies;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -29,10 +31,13 @@ public partial class App : System.Windows.Application
         services.AddSingleton<HttpClient>();
         services.AddSingleton<ICoinCapApiClient, CoinCapApiClient>();
 
+        services.AddSingleton<IFrameNavigationManager, FrameNavigationManager>();
+        
         services.AddTransient<ICryptoService, CryptoService>();
         services.AddTransient<TopCurrenciesPage>();
         services.AddTransient<TopCurrenciesViewModel>();
         services.AddTransient<SearchCurrenciesViewModel>();
+        services.AddTransient<CurrencyDetailsPage>();
         services.AddSingleton<MainWindow>();
     }
     
