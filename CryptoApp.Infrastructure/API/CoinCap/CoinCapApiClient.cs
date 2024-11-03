@@ -69,4 +69,36 @@ public class CoinCapApiClient : ICoinCapApiClient
         }
         
     }
+
+    public async Task<Result<CoinCapGetHistoryResponse>> GetHistoryAsync(string id, string interval, string start, string end)
+    {
+        if(_rateLimiter.CanProcess() is false)
+        {
+            return Result<CoinCapGetHistoryResponse>.Failure("Request ignored to not exceed rate limit");
+        }
+        
+        var request = new HttpRequestMessage(HttpMethod.Get, $"assets/{id}/history?interval={interval}&start={start}&end={end}");
+        try
+        {
+            var response = await HttpClient.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+            
+            var content = await response.Content.ReadAsStringAsync();
+            var data = JsonSerializer.Deserialize<CoinCapGetHistoryResponse>(content, _serializerOptions);
+            
+            return Result<CoinCapGetHistoryResponse>.Success(data);
+        }
+        catch (HttpRequestException e)
+        {
+            return Result<CoinCapGetHistoryResponse>.Failure($"API request failed: {e.Message}");
+        }
+        catch (JsonException e)
+        {
+            return Result<CoinCapGetHistoryResponse>.Failure($"Failed to parse JSON: {e.Message}");
+        }
+        catch (Exception e)
+        {
+            return Result<CoinCapGetHistoryResponse>.Failure($"An error occurred: {e.Message}");
+        }
+    }
 }
