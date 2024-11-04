@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:ui="clr-namespace:CryptoApp.Wpf.Shared.UI"
       xmlns:local="clr-namespace:CryptoApp.Wpf.CurrencyDetails"
       mc:Ignorable="d"
       Title="CurrencyDetailsPage" Height="450" Width="800">
@@ -14,16 +15,7 @@
                        Text="Loading..."/>
             <TextBlock Visibility="{Binding CandlesState.IsError, Converter={StaticResource VisibilityConverter}}"
                        Text="{Binding CandlesState.ErrorMessage}"/>
-            <ListBox Visibility="{Binding CandlesState.IsLoaded, Converter={StaticResource VisibilityConverter}}"
-                     ItemsSource="{Binding Candles}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Time}"/>
-                            <TextBlock Text="{Binding PriceUsd}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+            <ui:PriceChart Visibility="{Binding CandlesState.IsLoaded, Converter={StaticResource VisibilityConverter}}"
+                Candles="{Binding Candles}"/>
       </StackPanel>
 </Page>
