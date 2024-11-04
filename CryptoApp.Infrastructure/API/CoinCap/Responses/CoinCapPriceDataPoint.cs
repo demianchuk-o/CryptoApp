@@ -1,6 +1,6 @@
 ﻿namespace CryptoApp.Infrastructure.API.CoinCap.Responses;
 
 public record CoinCapPriceDataPoint(
-    int PriceUsd,
+    decimal PriceUsd,
     long Time
     );
