@@ -46,13 +46,14 @@ public class CurrencyDetailsViewModel : INotifyPropertyChanged
     {
         CandlesState = AppState.Loading();
 
-        string firstDate = DateTimeOffset.UtcNow.AddDays(-1).ToUnixTimeMilliseconds().ToString();
+        string firstDate = DateTimeOffset.UtcNow.AddDays(-30).ToUnixTimeMilliseconds().ToString();
         string secondDate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
+        Console.WriteLine($"requesting {_baseId} candles from {firstDate} to {secondDate}");
         var historyAsync = await _cryptoService.GetCryptoCurrencyHistoryAsync(
-            exchange:"poloniex",
-            interval: "h1",
+            exchange:"coinbase",
+            interval: "d1",
             baseId: BaseId,
-            quoteId: "bitcoin",
+            quoteId: "usd",
             start: firstDate,
             end: secondDate
             );
