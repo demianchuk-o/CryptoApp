@@ -27,6 +27,7 @@ public class CurrencyDetailsViewModel : INotifyPropertyChanged
             _baseId = value;
             OnPropertyChanged();
             _ = LoadCandlesAsync();
+            _ = LoadCurrencyAsync();
         }
     }
     
@@ -73,6 +74,44 @@ public class CurrencyDetailsViewModel : INotifyPropertyChanged
         else
         {
             CandlesState = AppState.Error(historyAsync.Message);
+        }
+    }
+    private AppState _currencyState = AppState.Loading();
+    public AppState CurrencyState
+    {
+        get => _currencyState;
+        private set
+        {
+            if (_currencyState == value) return;
+            _currencyState = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private CryptoCurrency _currency;
+    public CryptoCurrency Currency
+    {
+        get => _currency;
+        private set
+        {
+            if (_currency == value) return;
+            _currency = value;
+            OnPropertyChanged();
+        }
+    }
+    private async Task LoadCurrencyAsync()
+    {
+        CurrencyState = AppState.Loading();
+        var result = await _cryptoService.GetCryptoCurrencyAsync(BaseId);
+        
+        if (result.IsSuccess)
+        {
+            Currency = result.Data;
+            CurrencyState = AppState.Loaded();
+        }
+        else
+        {
+            CurrencyState = AppState.Error(result.Message);
         }
     }
     
