@@ -7,5 +7,5 @@ public class CandleData
     public decimal Low { get; set; }
     public decimal Close { get; set; }
     public decimal Volume { get; set; }
-    public decimal Period { get; set; }
+    public DateTime Period { get; set; }
 }
