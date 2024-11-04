@@ -70,7 +70,7 @@ public class TopCurrenciesViewModel : INotifyPropertyChanged
     private void NavigateToDetails(object parameter)
     {
         if (parameter is not CryptoCurrency cryptoCurrency) return;
-        _navigationService.NavigateToDetails(cryptoCurrency.Id);
+        _navigationService.NavigateToDetails(cryptoCurrency.Id, FrameType.Main);
     }
     
     public event PropertyChangedEventHandler? PropertyChanged;
