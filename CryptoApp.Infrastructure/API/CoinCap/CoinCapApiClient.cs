@@ -70,7 +70,7 @@ public class CoinCapApiClient : ICoinCapApiClient
         
     }
 
-    public async Task<Result<CoinCapGetCandlesResponse>> GetCandlesAsync(string excange, string interval, string baseId, string quoteId, string? start = null,
+    public async Task<Result<CoinCapGetCandlesResponse>> GetCandlesAsync(string exchange, string interval, string baseId, string quoteId, string? start = null,
         string? end = null)
     {
         if(_rateLimiter.CanProcess() is false)
@@ -80,7 +80,7 @@ public class CoinCapApiClient : ICoinCapApiClient
         
         List<string> queryParameters =
         [
-            $"exchange={excange}",
+            $"exchange={exchange}",
             $"interval={interval}",
             $"baseId={baseId}",
             $"quoteId={quoteId}"
