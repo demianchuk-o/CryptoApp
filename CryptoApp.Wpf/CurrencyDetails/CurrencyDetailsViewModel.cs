@@ -59,11 +59,14 @@ public class CurrencyDetailsViewModel : INotifyPropertyChanged
         
         if (historyAsync.IsSuccess)
         {
-            Candles.Clear();
-            foreach (var priceDataPoint in historyAsync.Data.Data)
+            if(!historyAsync.Data.Data.Any())
             {
-                Candles.Add(priceDataPoint);
+                CandlesState = AppState.Error("No data available");
+                return;
             }
+            
+            Candles.Clear();
+            Candles.AddRange(historyAsync.Data.Data);
             CandlesState = AppState.Loaded();
         }
         else
