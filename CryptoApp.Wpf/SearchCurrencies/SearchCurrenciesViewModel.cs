@@ -50,7 +50,7 @@ public class SearchCurrenciesViewModel : INotifyPropertyChanged
         async parameter =>
         {
             if (parameter is not CryptoCurrency cryptoCurrency) return;
-            _navigationService.NavigateToDetails(cryptoCurrency.Id);
+            _navigationService.NavigateToDetails(cryptoCurrency.Id, FrameType.Search);
         });
     private async Task SearchAsync()
     {

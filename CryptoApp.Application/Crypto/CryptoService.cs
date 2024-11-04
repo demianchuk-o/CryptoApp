@@ -29,4 +29,43 @@ public class CryptoService : ICryptoService
         
         return Result<List<CryptoCurrency>>.Failure(result.Message);
     }
+
+    public async Task<Result<CryptoCurrency>> GetCryptoCurrencyAsync(string id)
+    {
+        var result = await _coinCapApiClient.GetAssetAsync(id);
+        if (result.IsSuccess)
+        {
+            var responseData = result.Data;
+            var cryptoCurrency = CryptoCurrencyMapper.Map(responseData.Data);
+            
+            return Result<CryptoCurrency>.Success(cryptoCurrency);
+        }
+        return Result<CryptoCurrency>.Failure(result.Message);
+    }
+
+    public async Task<Result<CryptoCurrencyMarkets>> GetCryptoCurrencyMarketsAsync(string id)
+    {
+        var result = await _coinCapApiClient.GetMarketsAsync(id);
+        if (result.IsSuccess)
+        {
+            var responseData = result.Data;
+            var cryptoCurrencyMarkets = CryptoCurrencyMarketsMapper.Map(responseData);
+            
+            return Result<CryptoCurrencyMarkets>.Success(cryptoCurrencyMarkets);
+        }
+        return Result<CryptoCurrencyMarkets>.Failure(result.Message);
+    }
+
+    public async Task<Result<CryptoCurrencyCandles>> GetCryptoCurrencyHistoryAsync(string exchange, string interval, string baseId, string quoteId, string? start = null, string? end = null)
+    {
+        var result = await _coinCapApiClient.GetCandlesAsync(exchange, interval, baseId, quoteId, start, end);
+        if (result.IsSuccess)
+        {
+            var responseData = result.Data;
+            var cryptoCurrencyHistory = CryptoCurrencyHistoryMapper.Map(responseData);
+            
+            return Result<CryptoCurrencyCandles>.Success(cryptoCurrencyHistory);
+        }
+        return Result<CryptoCurrencyCandles>.Failure(result.Message);
+    }
 }

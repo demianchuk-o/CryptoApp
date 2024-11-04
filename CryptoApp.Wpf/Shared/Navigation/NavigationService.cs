@@ -19,12 +19,12 @@ public class NavigationService : INavigationService
 
         _frame.Navigate(new Uri(pageUri, UriKind.Relative), parameter);
     }
-    public void NavigateToDetails(string id)
+    public void NavigateToDetails(string id, FrameType frameType)
     {
         if(_frame is null)
             throw new InvalidOperationException("Frame is not initialized");
 
-        _frame.Navigate(new Uri($"CurrencyDetails/CurrencyDetailsPage.xaml?id={id}", UriKind.Relative));
+        _frame.Navigate(new Uri($"CurrencyDetails/CurrencyDetailsPage.xaml?id={id}&frameType={frameType}", UriKind.Relative));
     }
     public void GoBack()
     {
