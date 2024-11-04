@@ -19,6 +19,5 @@ public partial class CurrencyItem : UserControl
     public CurrencyItem()
     {
         InitializeComponent();
-        DataContext = this;
     }
 }
