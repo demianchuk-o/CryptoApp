@@ -28,19 +28,27 @@
                              Text="{Binding CurrencyState.ErrorMessage}"/>
                   <ui:CurrencyItem Visibility="{Binding CurrencyState.IsLoaded, Converter={StaticResource VisibilityConverter}}"
                                    CryptoCurrency="{Binding Currency}"/>
-                  
           </StackPanel>
           
           <!-- Markets -->
           <StackPanel Grid.Row="0" Grid.Column="1" Margin="10">
-              <TextBlock Text="Markets to buy:"/>
-              <ItemsControl ItemsSource="{Binding Markets}">
-                  <ItemsControl.ItemTemplate>
-                      <DataTemplate>
-                          <TextBlock Text="{Binding}" />
-                      </DataTemplate>
-                  </ItemsControl.ItemTemplate>
-              </ItemsControl>
+              <TextBlock Visibility="{Binding MarketsState.IsLoading, Converter={StaticResource VisibilityConverter}}" 
+                         Text="Loading..."/>
+              <TextBlock Visibility="{Binding MarketsState.IsError, Converter={StaticResource VisibilityConverter}}"
+                         Text="{Binding MarketsState.ErrorMessage}"/>
+              <StackPanel Visibility="{Binding MarketsState.IsLoaded, Converter={StaticResource VisibilityConverter}}">
+                  <TextBlock Text="Markets to buy:"/>
+                  <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                Height="200">
+                      <ItemsControl ItemsSource="{Binding Markets}">
+                          <ItemsControl.ItemTemplate>
+                              <DataTemplate>
+                                  <ui:MarketItem MarketPrice="{Binding}"/>
+                              </DataTemplate>
+                          </ItemsControl.ItemTemplate>
+                      </ItemsControl>
+                  </ScrollViewer>
+              </StackPanel>
           </StackPanel>
           
           <!-- Price Chart -->
