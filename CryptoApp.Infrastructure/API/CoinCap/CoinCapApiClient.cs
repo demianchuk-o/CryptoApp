@@ -37,7 +37,13 @@ public class CoinCapApiClient : ICoinCapApiClient
         
         return await GetAsync<CoinCapGetAssetsResponse>("assets", queryParameters);
     }
-    
+
+    public async Task<Result<CoinCapGetAssetResponse>> GetAssetAsync(string id)
+    {
+        return await GetAsync<CoinCapGetAssetResponse>($"assets/{id}", []); 
+    }
+
+
     public async Task<Result<CoinCapGetCandlesResponse>> GetCandlesAsync(string exchange, string interval, string baseId, string quoteId, string? start = null,
         string? end = null)
     {
