@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using CryptoApp.Wpf.Shared.Navigation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CryptoApp.Wpf.CurrencyDetails;
@@ -8,6 +9,7 @@ public partial class CurrencyDetailsPage : Page
 {
     private readonly CurrencyDetailsViewModel _viewModel;
     private string _id;
+    private FrameType _frameType;
     public CurrencyDetailsPage()
     {
         InitializeComponent();
@@ -21,6 +23,7 @@ public partial class CurrencyDetailsPage : Page
     {
         FetchIdFromQuery();
         _viewModel.BaseId = _id;
+        _viewModel.Initialize(_frameType);
     }
 
     private void FetchIdFromQuery()
@@ -39,6 +42,8 @@ public partial class CurrencyDetailsPage : Page
             .ToDictionary(p => p[0], p => p[1]);
 
         if (!parameters.TryGetValue("id", out string? id)) return;
+        if (!parameters.TryGetValue("frameType", out string? frameType)) return;
         _id = id;
+        _frameType = Enum.Parse<FrameType>(frameType);
     }
 }

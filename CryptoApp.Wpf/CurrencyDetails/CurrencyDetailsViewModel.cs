@@ -2,20 +2,33 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using CryptoApp.Application.Crypto;
 using CryptoApp.Core.CryptoCurrencies;
 using CryptoApp.Wpf.Shared;
+using CryptoApp.Wpf.Shared.Commands;
+using CryptoApp.Wpf.Shared.Navigation;
+using CryptoApp.Wpf.Shared.Navigation.Manager;
 
 namespace CryptoApp.Wpf.CurrencyDetails;
 
 public class CurrencyDetailsViewModel : INotifyPropertyChanged
 {
     private readonly ICryptoService _cryptoService;
-
-    public CurrencyDetailsViewModel(ICryptoService cryptoService)
+    private readonly IFrameNavigationManager _navigationManager;
+    private INavigationService _navigationService;
+    public CurrencyDetailsViewModel(ICryptoService cryptoService, IFrameNavigationManager navigationManager)
     {
         _cryptoService = cryptoService;
+        _navigationManager = navigationManager;
     }
+
+    public void Initialize(FrameType frameType)
+    {
+        _navigationService = _navigationManager.GetNavigationService(frameType);
+    }
+    
     
     private string _baseId = string.Empty;
     public string BaseId
@@ -154,6 +167,9 @@ public class CurrencyDetailsViewModel : INotifyPropertyChanged
             MarketsState = AppState.Error(result.Message);
         }
     }
+    private RelayCommand? _goBackCommand;
+    public ICommand GoBackCommand => _goBackCommand ??= new RelayCommand(_ => _navigationService?.GoBack(),
+        _ => _navigationService is not null && _navigationService.CanGoBack); 
     public event PropertyChangedEventHandler? PropertyChanged;
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)

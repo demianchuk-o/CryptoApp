@@ -22,8 +22,9 @@
           
           <!-- Currency Details -->
           <StackPanel Grid.Row="0" Grid.Column="0">
-                  <TextBlock Visibility="{Binding CurrencyState.IsLoading, Converter={StaticResource VisibilityConverter}}" 
-                             Text="Loading..."/>
+              <Button Command="{Binding GoBackCommand}" Content="Back" />
+              <TextBlock Visibility="{Binding CurrencyState.IsLoading, Converter={StaticResource VisibilityConverter}}" 
+                         Text="Loading..."/>
                   <TextBlock Visibility="{Binding CurrencyState.IsError, Converter={StaticResource VisibilityConverter}}"
                              Text="{Binding CurrencyState.ErrorMessage}"/>
                   <ui:CurrencyItem Visibility="{Binding CurrencyState.IsLoaded, Converter={StaticResource VisibilityConverter}}"
