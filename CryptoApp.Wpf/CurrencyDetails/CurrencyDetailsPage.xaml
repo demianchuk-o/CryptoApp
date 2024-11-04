@@ -10,11 +10,11 @@
             <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
       </Page.Resources>
       <StackPanel>
-            <TextBlock Visibility="{Binding PriceHistoryState.IsLoading, Converter={StaticResource VisibilityConverter}}" 
+            <TextBlock Visibility="{Binding CandlesState.IsLoading, Converter={StaticResource VisibilityConverter}}" 
                        Text="Loading..."/>
-            <TextBlock Visibility="{Binding PriceHistoryState.IsError, Converter={StaticResource VisibilityConverter}}"
-                       Text="{Binding PriceHistoryState.ErrorMessage}"/>
-            <ListBox Visibility="{Binding PriceHistoryState.IsLoaded, Converter={StaticResource VisibilityConverter}}"
+            <TextBlock Visibility="{Binding CandlesState.IsError, Converter={StaticResource VisibilityConverter}}"
+                       Text="{Binding CandlesState.ErrorMessage}"/>
+            <ListBox Visibility="{Binding CandlesState.IsLoaded, Converter={StaticResource VisibilityConverter}}"
                      ItemsSource="{Binding PriceHistory}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>

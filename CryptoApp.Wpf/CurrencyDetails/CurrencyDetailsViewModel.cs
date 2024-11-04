@@ -30,14 +30,14 @@ public class CurrencyDetailsViewModel : INotifyPropertyChanged
         }
     }
     
-    private AppState _priceHistoryState = AppState.Loading();
-    public AppState PriceHistoryState
+    private AppState _candlesState = AppState.Loading();
+    public AppState CandlesState
     {
-        get => _priceHistoryState;
+        get => _candlesState;
         private set
         {
-            if (_priceHistoryState == value) return;
-            _priceHistoryState = value;
+            if (_candlesState == value) return;
+            _candlesState = value;
             OnPropertyChanged();
         }
     }
@@ -52,10 +52,10 @@ public class CurrencyDetailsViewModel : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    public ObservableCollection<PriceDataPoint> PriceHistory { get; } = [];
+    public ObservableCollection<CandleData> PriceHistory { get; } = [];
     private async Task LoadPriceHistoryAsync()
     {
-        PriceHistoryState = AppState.Loading();
+        CandlesState = AppState.Loading();
         //date in unix timestamp format
         string firstDate = DateTimeOffset.UtcNow.AddDays(-1).ToUnixTimeMilliseconds().ToString();
         string secondDate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
@@ -69,12 +69,12 @@ public class CurrencyDetailsViewModel : INotifyPropertyChanged
             {
                 PriceHistory.Add(priceDataPoint);
             }
-            PriceHistoryState = AppState.Loaded();
+            CandlesState = AppState.Loaded();
         }
         else
         {
             ErrorMessage = historyAsync.Message;
-            PriceHistoryState = AppState.Error(historyAsync.Message);
+            CandlesState = AppState.Error(historyAsync.Message);
         }
     }
     
