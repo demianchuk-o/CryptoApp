@@ -1,0 +1,21 @@
+﻿<Window x:Class="CryptoApp.Wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CryptoApp.Wpf"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <TabControl>
+            <TabItem>
+                <TabItem.Header>Home</TabItem.Header>
+                <Frame x:Name="MainFrame" Source="TopCurrencies/TopCurrenciesPage.xaml" />
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>Search</TabItem.Header>
+                <Frame x:Name="SearchFrame" Source="SearchCurrencies/SearchCurrenciesPage.xaml" />
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

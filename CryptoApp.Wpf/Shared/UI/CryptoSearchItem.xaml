@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="CryptoApp.Wpf.Shared.UI.CryptoSearchItem"
+             x:Name="Control"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:CryptoApp.Wpf.Shared.UI"
+             xmlns:valueConverters="clr-namespace:CryptoApp.Wpf.Shared.ValueConverters"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <valueConverters:PriceUsdConverter x:Key="PriceUsdConverter" />
+        <valueConverters:ChangePercent24HrConverter x:Key="ChangePercent24HrConverter" />
+        <valueConverters:VolumeUsd24HrConverter x:Key="VolumeUsd24HrConverter" />
+        <valueConverters:PercentageToBrushConverter x:Key="PercentageToBrushConverter"/>
+        <Style x:Key="BaseTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="0,0,10,0" />
+        </Style>
+        <Style x:Key="NumericValueStyle" TargetType="TextBlock"
+               BasedOn="{StaticResource BaseTextBlockStyle}">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+        <Style x:Key="RankStyle" TargetType="TextBlock"
+               BasedOn="{StaticResource BaseTextBlockStyle}">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="10,0"/>
+        </Style>
+        <Style x:Key="SymbolStyle" TargetType="TextBlock"
+               BasedOn="{StaticResource BaseTextBlockStyle}">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
+        <Style x:Key="NameStyle" TargetType="TextBlock"
+               BasedOn="{StaticResource BaseTextBlockStyle}">
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+    </UserControl.Resources>
+    <Grid Margin="5,5" HorizontalAlignment="Stretch" Width="Auto"
+          DataContext="{Binding CryptoCurrency, ElementName=Control}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.05*"/>
+            <ColumnDefinition Width="0.3*"/>
+            <ColumnDefinition Width="0.25*"/>
+            <ColumnDefinition Width="0.15*"/>
+            <ColumnDefinition Width="0.25*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Column="0" 
+                   Text="{Binding Rank}"
+                   Style="{StaticResource RankStyle}"/>
+            
+        <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical" Margin="10,0">
+            <TextBlock Text="{Binding Symbol}"
+                       Style="{StaticResource SymbolStyle}"/>
+            <TextBlock Text="{Binding Name}"
+                       Style="{StaticResource NameStyle}"/>
+        </StackPanel>
+            
+        <TextBlock Grid.Column="2" Grid.Row="0"
+                   Text="{Binding PriceUsd, Converter={StaticResource PriceUsdConverter}}"
+                   Style="{StaticResource NumericValueStyle}"/>
+            
+        <TextBlock Grid.Column="3" Grid.Row="0"
+                   Text="{Binding ChangePercent24Hr, Converter={StaticResource ChangePercent24HrConverter}}"
+                   Style="{StaticResource NumericValueStyle}">
+            <TextBlock.Foreground>
+                <Binding Path="ChangePercent24Hr"
+                         Converter="{StaticResource PercentageToBrushConverter}" />
+            </TextBlock.Foreground>
+        </TextBlock>
+            
+        <TextBlock Grid.Column="4" Grid.Row="0"
+                   Text="{Binding VolumeUsd24Hr, Converter={StaticResource VolumeUsd24HrConverter}}"
+                   Style="{StaticResource NumericValueStyle}"
+        />
+    </Grid>
+</UserControl>

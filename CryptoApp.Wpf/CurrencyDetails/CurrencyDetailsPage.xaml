@@ -1,0 +1,71 @@
+﻿<Page x:Class="CryptoApp.Wpf.CurrencyDetails.CurrencyDetailsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:ui="clr-namespace:CryptoApp.Wpf.Shared.UI"
+      xmlns:local="clr-namespace:CryptoApp.Wpf.CurrencyDetails"
+      mc:Ignorable="d"
+      Title="CurrencyDetailsPage" Height="450" Width="800">
+      <Page.Resources>
+            <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
+      </Page.Resources>
+      <Grid>
+          <Grid.RowDefinitions>
+              <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="2*" />
+              <ColumnDefinition Width="1*" />
+          </Grid.ColumnDefinitions>
+          
+          <!-- Currency Details -->
+          <StackPanel Grid.Row="0" Grid.Column="0">
+              <Button Command="{Binding GoBackCommand}" Content="Back" />
+              <TextBlock Visibility="{Binding CurrencyState.IsLoading, Converter={StaticResource VisibilityConverter}}" 
+                         Text="Loading..."/>
+                  <TextBlock Visibility="{Binding CurrencyState.IsError, Converter={StaticResource VisibilityConverter}}"
+                             Text="{Binding CurrencyState.ErrorMessage}"/>
+                  <ui:CurrencyItem Visibility="{Binding CurrencyState.IsLoaded, Converter={StaticResource VisibilityConverter}}"
+                                   CryptoCurrency="{Binding Currency}"/>
+          </StackPanel>
+          
+          <!-- Markets -->
+          <StackPanel Grid.Row="0" Grid.Column="1" Margin="10">
+              <TextBlock Visibility="{Binding MarketsState.IsLoading, Converter={StaticResource VisibilityConverter}}" 
+                         Text="Loading..."/>
+              <TextBlock Visibility="{Binding MarketsState.IsError, Converter={StaticResource VisibilityConverter}}"
+                         Text="{Binding MarketsState.ErrorMessage}"/>
+              <StackPanel Visibility="{Binding MarketsState.IsLoaded, Converter={StaticResource VisibilityConverter}}">
+                  <TextBlock Text="Markets to buy:"/>
+                  <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                Height="200">
+                      <ItemsControl ItemsSource="{Binding Markets}">
+                          <ItemsControl.ItemTemplate>
+                              <DataTemplate>
+                                  <ui:MarketItem MarketPrice="{Binding}"/>
+                              </DataTemplate>
+                          </ItemsControl.ItemTemplate>
+                      </ItemsControl>
+                  </ScrollViewer>
+              </StackPanel>
+          </StackPanel>
+          
+          <!-- Price Chart -->
+          <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+              <TextBlock Text="Chart:" FontWeight="Bold"/>
+              <StackPanel  Margin="10" >
+                  <TextBlock Visibility="{Binding CandlesState.IsLoading, Converter={StaticResource VisibilityConverter}}" 
+                             Text="Loading..."/>
+                  <TextBlock Visibility="{Binding CandlesState.IsError, Converter={StaticResource VisibilityConverter}}"
+                             Text="{Binding CandlesState.ErrorMessage}"/>
+                  <StackPanel Visibility="{Binding CandlesState.IsLoaded, Converter={StaticResource VisibilityConverter}}"
+                              HorizontalAlignment="Center">
+                  
+                      <ui:PriceChart Candles="{Binding Candles}"/>
+                  </StackPanel>
+              </StackPanel>
+          </StackPanel>
+      </Grid>
+</Page>
