@@ -6,5 +6,5 @@ public record CandlePoint(
     decimal Low,
     decimal Close,
     decimal Volume,
-    decimal Period
+    long Period
     );
