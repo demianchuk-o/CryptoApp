@@ -2,5 +2,5 @@
 
 public class CoinCapGetAssetResponse
 {
-    CoinCapAsset Data { get; set; }
+    public CoinCapAsset Data { get; set; }
 }
