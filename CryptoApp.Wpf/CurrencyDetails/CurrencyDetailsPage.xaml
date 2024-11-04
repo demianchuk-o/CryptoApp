@@ -15,7 +15,7 @@
             <TextBlock Visibility="{Binding CandlesState.IsError, Converter={StaticResource VisibilityConverter}}"
                        Text="{Binding CandlesState.ErrorMessage}"/>
             <ListBox Visibility="{Binding CandlesState.IsLoaded, Converter={StaticResource VisibilityConverter}}"
-                     ItemsSource="{Binding PriceHistory}">
+                     ItemsSource="{Binding Candles}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">

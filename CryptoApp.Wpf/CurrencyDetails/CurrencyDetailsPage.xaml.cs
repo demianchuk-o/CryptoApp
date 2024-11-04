@@ -20,7 +20,7 @@ public partial class CurrencyDetailsPage : Page
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
         FetchIdFromQuery();
-        _viewModel.Id = _id;
+        _viewModel.BaseId = _id;
     }
 
     private void FetchIdFromQuery()
