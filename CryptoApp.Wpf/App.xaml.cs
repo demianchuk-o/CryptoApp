@@ -38,6 +38,7 @@ public partial class App : System.Windows.Application
         services.AddTransient<TopCurrenciesViewModel>();
         services.AddTransient<SearchCurrenciesViewModel>();
         services.AddTransient<CurrencyDetailsPage>();
+        services.AddTransient<CurrencyDetailsViewModel>();
         services.AddSingleton<MainWindow>();
     }
     
