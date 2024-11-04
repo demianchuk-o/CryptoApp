@@ -5,14 +5,18 @@ namespace CryptoApp.Application.Mappers;
 
 public static class CryptoCurrencyHistoryMapper
 {
-    public static CryptoCurrencyHistory Map(CoinCapGetHistoryResponse response)
+    public static CryptoCurrencyCandles Map(CoinCapGetCandlesResponse response)
     {
-        return new CryptoCurrencyHistory
+        return new CryptoCurrencyCandles
         {
-            Data = response.Data.Select(dataPoint => new PriceDataPoint
+            Data = response.Data.Select(dataPoint => new CandleData
             {
-                PriceUsd = dataPoint.PriceUsd,
-                Time = DateTimeOffset.FromUnixTimeMilliseconds(dataPoint.Time).DateTime
+                Open = dataPoint.Open,
+                Close = dataPoint.Close,
+                High = dataPoint.High,
+                Low = dataPoint.Low,
+                Volume = dataPoint.Volume,
+                Period = DateTimeOffset.FromUnixTimeMilliseconds(dataPoint.Period).DateTime
             }).ToArray()
         };
     }
