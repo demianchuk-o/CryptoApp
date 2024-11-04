@@ -70,35 +70,57 @@ public class CoinCapApiClient : ICoinCapApiClient
         
     }
 
-    public async Task<Result<CoinCapGetHistoryResponse>> GetHistoryAsync(string id, string interval, string start, string end)
+    public async Task<Result<CoinCapGetCandlesResponse>> GetCandlesAsync(string excange, string interval, string baseId, string quoteId, string? start = null,
+        string? end = null)
     {
         if(_rateLimiter.CanProcess() is false)
         {
-            return Result<CoinCapGetHistoryResponse>.Failure("Request ignored to not exceed rate limit");
+            return Result<CoinCapGetCandlesResponse>.Failure("Request ignored to not exceed rate limit");
         }
         
-        var request = new HttpRequestMessage(HttpMethod.Get, $"assets/{id}/history?interval={interval}&start={start}&end={end}");
+        List<string> queryParameters =
+        [
+            $"exchange={excange}",
+            $"interval={interval}",
+            $"baseId={baseId}",
+            $"quoteId={quoteId}"
+        ];
+        
+        if (!string.IsNullOrWhiteSpace(start))
+        {
+            queryParameters.Add($"start={start}");
+        }
+        
+        if (!string.IsNullOrWhiteSpace(end))
+        {
+            queryParameters.Add($"end={end}");
+        }
+        
+        var queryString = "?" + string.Join("&", queryParameters);
+        
+        var request = new HttpRequestMessage(HttpMethod.Get, $"candles{queryString}");
+
         try
         {
             var response = await HttpClient.SendAsync(request);
             response.EnsureSuccessStatusCode();
             
             var content = await response.Content.ReadAsStringAsync();
-            var data = JsonSerializer.Deserialize<CoinCapGetHistoryResponse>(content, _serializerOptions);
+            var data = JsonSerializer.Deserialize<CoinCapGetCandlesResponse>(content, _serializerOptions);
             
-            return Result<CoinCapGetHistoryResponse>.Success(data);
+            return Result<CoinCapGetCandlesResponse>.Success(data);
         }
         catch (HttpRequestException e)
         {
-            return Result<CoinCapGetHistoryResponse>.Failure($"API request failed: {e.Message}");
+            return Result<CoinCapGetCandlesResponse>.Failure($"API request failed: {e.Message}");
         }
         catch (JsonException e)
         {
-            return Result<CoinCapGetHistoryResponse>.Failure($"Failed to parse JSON: {e.Message}");
+            return Result<CoinCapGetCandlesResponse>.Failure($"Failed to parse JSON: {e.Message}");
         }
         catch (Exception e)
         {
-            return Result<CoinCapGetHistoryResponse>.Failure($"An error occurred: {e.Message}");
+            return Result<CoinCapGetCandlesResponse>.Failure($"An error occurred: {e.Message}");
         }
     }
 }
