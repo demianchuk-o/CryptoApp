@@ -43,8 +43,14 @@
         <TextBlock Text="{Binding Rank}" Style="{StaticResource RankStyle}"/>
         <TextBlock Text="{Binding Symbol}" Style="{StaticResource SymbolStyle}"/>
         <TextBlock Text="{Binding Name}" Style="{StaticResource NameStyle}"/>
+        
+        <TextBlock Text="Price (USD)" Style="{StaticResource BaseTextBlockStyle}"/>
         <TextBlock Text="{Binding PriceUsd, Converter={StaticResource PriceUsdConverter}}" Style="{StaticResource NumericValueStyle}"/>
+        
+        <TextBlock Text="Volume (USD)" Style="{StaticResource BaseTextBlockStyle}"/>
         <TextBlock Text="{Binding VolumeUsd24Hr, Converter={StaticResource VolumeUsd24HrConverter}}" Style="{StaticResource NumericValueStyle}"/>
+        
+        <TextBlock Text="Change (24h %)" Style="{StaticResource BaseTextBlockStyle}"/>
         <TextBlock Text="{Binding ChangePercent24Hr, Converter={StaticResource ChangePercent24HrConverter}}" Style="{StaticResource NumericValueStyle}">
             <TextBlock.Foreground>
                 <Binding Path="ChangePercent24Hr" Converter="{StaticResource PercentageToBrushConverter}" />
