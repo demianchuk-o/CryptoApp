@@ -41,7 +41,7 @@ public class CurrencyDetailsViewModel : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    public ObservableCollection<CandleData> Candles { get; } = [];
+    public List<CandleData> Candles { get; } = [];
     private async Task LoadCandlesAsync()
     {
         CandlesState = AppState.Loading();
