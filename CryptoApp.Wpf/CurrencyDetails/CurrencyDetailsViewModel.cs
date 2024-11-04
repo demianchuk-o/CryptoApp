@@ -28,6 +28,7 @@ public class CurrencyDetailsViewModel : INotifyPropertyChanged
             OnPropertyChanged();
             _ = LoadCandlesAsync();
             _ = LoadCurrencyAsync();
+            _ = LoadMarketsAsync();
         }
     }
     
@@ -115,6 +116,44 @@ public class CurrencyDetailsViewModel : INotifyPropertyChanged
         }
     }
     
+    private AppState _marketsState = AppState.Loading();
+    public AppState MarketsState
+    {
+        get => _marketsState;
+        private set
+        {
+            if (_marketsState == value) return;
+            _marketsState = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public ObservableCollection<MarketPrice> Markets { get; } = [];
+    private async Task LoadMarketsAsync()
+    {
+        MarketsState = AppState.Loading();
+        var result = await _cryptoService.GetCryptoCurrencyMarketsAsync(BaseId);
+        
+        if (result.IsSuccess)
+        {
+            if(!result.Data.MarketPrices.Any())
+            {
+                MarketsState = AppState.Error("No data available");
+                return;
+            }
+            
+            Markets.Clear();
+            foreach (var marketPrice in result.Data.MarketPrices)
+            {
+                Markets.Add(marketPrice);
+            }
+            MarketsState = AppState.Loaded();
+        }
+        else
+        {
+            MarketsState = AppState.Error(result.Message);
+        }
+    }
     public event PropertyChangedEventHandler? PropertyChanged;
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
