@@ -43,6 +43,19 @@ public class CryptoService : ICryptoService
         return Result<CryptoCurrency>.Failure(result.Message);
     }
 
+    public async Task<Result<CryptoCurrencyMarkets>> GetCryptoCurrencyMarketsAsync(string id)
+    {
+        var result = await _coinCapApiClient.GetMarketsAsync(id);
+        if (result.IsSuccess)
+        {
+            var responseData = result.Data;
+            var cryptoCurrencyMarkets = CryptoCurrencyMarketsMapper.Map(responseData);
+            
+            return Result<CryptoCurrencyMarkets>.Success(cryptoCurrencyMarkets);
+        }
+        return Result<CryptoCurrencyMarkets>.Failure(result.Message);
+    }
+
     public async Task<Result<CryptoCurrencyCandles>> GetCryptoCurrencyHistoryAsync(string exchange, string interval, string baseId, string quoteId, string? start = null, string? end = null)
     {
         var result = await _coinCapApiClient.GetCandlesAsync(exchange, interval, baseId, quoteId, start, end);
