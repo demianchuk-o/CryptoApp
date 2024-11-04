@@ -70,10 +70,6 @@ public class CoinCapApiClient : ICoinCapApiClient
     
     private async Task<Result<T>> GetAsync<T>(string endpoint, List<string> queryParameters) where T : class
     {
-        if(_rateLimiter.CanProcess() is false)
-        {
-            return Result<T>.Failure("Request ignored to not exceed rate limit");
-        }
         
         var queryString = queryParameters.Any()
             ? "?" + string.Join("&", queryParameters)
