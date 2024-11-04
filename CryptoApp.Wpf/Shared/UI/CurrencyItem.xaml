@@ -44,18 +44,48 @@
         <TextBlock Text="{Binding Symbol}" Style="{StaticResource SymbolStyle}"/>
         <TextBlock Text="{Binding Name}" Style="{StaticResource NameStyle}"/>
         
-        <TextBlock Text="Price (USD)" Style="{StaticResource BaseTextBlockStyle}"/>
-        <TextBlock Text="{Binding PriceUsd, Converter={StaticResource PriceUsdConverter}}" Style="{StaticResource NumericValueStyle}"/>
-        
-        <TextBlock Text="Volume (USD)" Style="{StaticResource BaseTextBlockStyle}"/>
-        <TextBlock Text="{Binding VolumeUsd24Hr, Converter={StaticResource VolumeUsd24HrConverter}}" Style="{StaticResource NumericValueStyle}"/>
-        
-        <TextBlock Text="Change (24h %)" Style="{StaticResource BaseTextBlockStyle}"/>
-        <TextBlock Text="{Binding ChangePercent24Hr, Converter={StaticResource ChangePercent24HrConverter}}" Style="{StaticResource NumericValueStyle}">
-            <TextBlock.Foreground>
-                <Binding Path="ChangePercent24Hr" Converter="{StaticResource PercentageToBrushConverter}" />
-            </TextBlock.Foreground>
-        </TextBlock>
-        <TextBlock Text="{Binding MarketCapUsd, Converter={StaticResource PriceUsdConverter}}" Style="{StaticResource NumericValueStyle}"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Grid.Row="0" Grid.Column="0" 
+                       Text="Price (USD)" Style="{StaticResource BaseTextBlockStyle}"/>
+            <TextBlock Grid.Row="0" Grid.Column="1" 
+                       Text="{Binding PriceUsd, Converter={StaticResource PriceUsdConverter}}" 
+                       Style="{StaticResource NumericValueStyle}"/>
+            
+            <TextBlock Grid.Row="1" Grid.Column="0" 
+                       Text="Volume (USD)" 
+                       Style="{StaticResource BaseTextBlockStyle}"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" 
+                       Text="{Binding VolumeUsd24Hr, Converter={StaticResource VolumeUsd24HrConverter}}" 
+                       Style="{StaticResource NumericValueStyle}"/>
+            
+            <TextBlock Grid.Row="2" Grid.Column="0" 
+                       Text="Change (24h %)" 
+                       Style="{StaticResource BaseTextBlockStyle}"/>
+            <TextBlock Grid.Row="2" Grid.Column="1" 
+                       Text="{Binding ChangePercent24Hr, Converter={StaticResource ChangePercent24HrConverter}}" 
+                       Style="{StaticResource NumericValueStyle}">
+                <TextBlock.Foreground>
+                    <Binding Path="ChangePercent24Hr" Converter="{StaticResource PercentageToBrushConverter}" />
+                </TextBlock.Foreground>
+            </TextBlock>
+            <TextBlock Grid.Row="3" Grid.Column="0" 
+                       Text="Market Cap (USD)" 
+                       Style="{StaticResource BaseTextBlockStyle}"/>
+            <TextBlock Grid.Row="3" Grid.Column="1" 
+                       Text="{Binding MarketCapUsd, Converter={StaticResource PriceUsdConverter}}" 
+                       Style="{StaticResource NumericValueStyle}"/>
+        </Grid>
     </StackPanel>
 </UserControl>
