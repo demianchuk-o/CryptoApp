@@ -17,16 +17,16 @@ public class CurrencyDetailsViewModel : INotifyPropertyChanged
         _cryptoService = cryptoService;
     }
     
-    private string _id = string.Empty;
-    public string Id
+    private string _baseId = string.Empty;
+    public string BaseId
     {
-        get => _id;
+        get => _baseId;
         set
         {
-            if (_id == value) return;
-            _id = value;
+            if (_baseId == value) return;
+            _baseId = value;
             OnPropertyChanged();
-            _ = LoadPriceHistoryAsync();
+            _ = LoadCandlesAsync();
         }
     }
     
@@ -41,39 +41,33 @@ public class CurrencyDetailsViewModel : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    private string _errorMessage = string.Empty;
-    public string ErrorMessage
-    {
-        get => _errorMessage;
-        private set
-        {
-            if (_errorMessage == value) return;
-            _errorMessage = value;
-            OnPropertyChanged();
-        }
-    }
-    public ObservableCollection<CandleData> PriceHistory { get; } = [];
-    private async Task LoadPriceHistoryAsync()
+    public ObservableCollection<CandleData> Candles { get; } = [];
+    private async Task LoadCandlesAsync()
     {
         CandlesState = AppState.Loading();
-        //date in unix timestamp format
+
         string firstDate = DateTimeOffset.UtcNow.AddDays(-1).ToUnixTimeMilliseconds().ToString();
         string secondDate = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds().ToString();
-        var historyAsync = await _cryptoService.GetCryptoCurrencyHistoryAsync(Id, "m1", 
-            firstDate, secondDate);
+        var historyAsync = await _cryptoService.GetCryptoCurrencyHistoryAsync(
+            exchange:"poloniex",
+            interval: "h1",
+            baseId: BaseId,
+            quoteId: "bitcoin",
+            start: firstDate,
+            end: secondDate
+            );
+        
         if (historyAsync.IsSuccess)
         {
-            PriceHistory.Clear();
-            Console.WriteLine(historyAsync.Data.Data.Length);
+            Candles.Clear();
             foreach (var priceDataPoint in historyAsync.Data.Data)
             {
-                PriceHistory.Add(priceDataPoint);
+                Candles.Add(priceDataPoint);
             }
             CandlesState = AppState.Loaded();
         }
         else
         {
-            ErrorMessage = historyAsync.Message;
             CandlesState = AppState.Error(historyAsync.Message);
         }
     }
