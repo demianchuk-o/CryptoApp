@@ -6,7 +6,24 @@
       xmlns:local="clr-namespace:CryptoApp.Wpf.CurrencyDetails"
       mc:Ignorable="d"
       Title="CurrencyDetailsPage" Height="450" Width="800">
-      <StackPanel x:Name="MainStackPanel">
-            
+      <Page.Resources>
+            <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
+      </Page.Resources>
+      <StackPanel>
+            <TextBlock Visibility="{Binding PriceHistoryState.IsLoading, Converter={StaticResource VisibilityConverter}}" 
+                       Text="Loading..."/>
+            <TextBlock Visibility="{Binding PriceHistoryState.IsError, Converter={StaticResource VisibilityConverter}}"
+                       Text="{Binding PriceHistoryState.ErrorMessage}"/>
+            <ListBox Visibility="{Binding PriceHistoryState.IsLoaded, Converter={StaticResource VisibilityConverter}}"
+                     ItemsSource="{Binding PriceHistory}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Time}"/>
+                            <TextBlock Text="{Binding PriceUsd}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
       </StackPanel>
 </Page>
